@@ -3,6 +3,14 @@ import twitterLogo from './assets/twitter-logo.svg'
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import myEpicNft from './utils/MyEpicNFT.json'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+
+// represents all of the brand icons in @fortawesome/free-brands-svg-icons
+// So any of the brand icons in that package may be referenced by icon name as a string
+library.add(fab, faSyncAlt)
 
 // Constants
 const TWITTER_HANDLE = 'andrewmhenry22'
@@ -22,8 +30,15 @@ const App = () => {
   const [mintMessage, setMintMessage] = useState('')
   const [openSeaLink, setOpenSeaLink] = useState('')
   const [showMintMessage, setShowMintMessage] = useState(false)
+  const [active, setActive] = useState({ hovered: false, duration: 4000 })
 
-  console.log('🚀 ~ file: App.js ~ line 23 ~ App ~ mintMessage', mintMessage)
+  const iconStyles = {
+    fontSize: '1em',
+    m: 0,
+    color: active.hovered ? '#60c657' : '#35aee2',
+    cursor: 'pointer',
+  }
+
   // Gotta make sure this is async
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window
@@ -199,40 +214,39 @@ const App = () => {
     } else setCorrectNetwork(true)
   }
 
-  // const getNumberMintedVsSupply = async () => {
-  //   // Most of this looks the same as our function askContractToMintNft
-  //   try {
-  //     const { ethereum } = window;
+  const getNumberMintedVsSupply = async () => {
+    // Most of this looks the same as our function askContractToMintNft
+    try {
+      const { ethereum } = window
 
-  //     if (ethereum) {
-  //       // Same stuff again
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      if (ethereum) {
+        // Same stuff again
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer)
 
-  //       // Get the total number that have been minted
-  //       let nftMintedCount = await connectedContract.totalMinted()
-  //       console.log(nftMintedCount)
-  //       console.log((nftMintedCount.toNumber()))
+        // Get the total number that have been minted
+        let nftMintedCount = await connectedContract.totalMinted()
+        // console.log(nftMintedCount)
+        // console.log(nftMintedCount.toNumber())
 
-  //       setCurrentTotalMinted(nftMintedCount.toNumber());
+        setCurrentTotalMinted(nftMintedCount.toNumber())
 
-  //       // Get the total supply
-  //       let nftSupplyCount = await connectedContract.totalSupply()
-  //       console.log(nftSupplyCount)
-  //       console.log((nftSupplyCount.toNumber()))
+        // Get the total supply
+        let nftSupplyCount = await connectedContract.totalSupply()
+        // console.log(nftSupplyCount)
+        // console.log(nftSupplyCount.toNumber())
 
-  //       setCurrentTotalSupply(nftSupplyCount.toNumber());
+        setCurrentTotalSupply(nftSupplyCount.toNumber())
 
-  //       console.log("Checked mint number vs supply!")
-
-  //     } else {
-  //       console.log("Ethereum object doesn't exist!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+        // console.log('Checked mint number vs supply!')
+      } else {
+        console.log("Ethereum object doesn't exist!")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     checkIfWalletIsConnected()
@@ -340,12 +354,25 @@ const App = () => {
           )}
         </div>
 
-        <div className='' style={{ margin: '40px auto' }}>
+        <div className='' style={{ margin: '40px auto', display: 'flex', justifyContent: 'center' }}>
           {correctNetwork && (
-            <div>
-              <p
-                style={{ color: 'white', letterSpacing: '0.03em' }}
-              >{`MINfTYs minted: ${currentTotalMinted} of ${currentTotalSupply}`}</p>
+            <div style={{ display: 'flex' }}>
+              <p style={{ color: 'white', letterSpacing: '0.03em' }}>
+                {`MINfTYs minted: ${currentTotalMinted} of ${currentTotalSupply}`}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', padding: '0px 0px 0px 8px' }}>
+                <FontAwesomeIcon
+                  icon={faSyncAlt}
+                  style={iconStyles}
+                  onMouseEnter={() => {
+                    setActive({ hovered: true, duration: 500 })
+                  }}
+                  onMouseLeave={() => {
+                    setActive({ hovered: false, duration: 500 })
+                  }}
+                  onMouseDown={() => getNumberMintedVsSupply()}
+                />
+              </div>
             </div>
           )}
         </div>
