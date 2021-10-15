@@ -53,7 +53,7 @@ const App = () => {
     // Check if the user is on the correct network
 
     let chainId = await ethereum.request({ method: 'eth_chainId' })
-    console.log('Connected to chain ' + chainId)
+    // console.log('Connected to chain ' + chainId)
 
     // // String, hex code of the chainId of the Rinkebey test network
     const rinkebyChainId = '0x4'
@@ -71,7 +71,7 @@ const App = () => {
 
     if (accounts.length !== 0) {
       const account = accounts[0]
-      console.log('Found an authorized account:', account)
+      // console.log('Found an authorized account:', account)
       setCurrentAccount(account)
 
       // Setup listener! This is for the case where a user comes to our site
@@ -252,7 +252,7 @@ const App = () => {
     checkIfWalletIsConnected()
     checkCorrectNetwork()
     // getNumberMintedVsSupply();
-  }, [])
+  })
 
   const renderNotConnectedContainer = () => (
     <button onClick={connectWallet} className='cta-button connect-wallet-button' style={{ margin: '40px auto' }}>
