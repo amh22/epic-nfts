@@ -10,6 +10,7 @@
 .container {
   background-color: #180e1d;
   margin: auto;
+  padding: 0px 10px;
 }
 
 .header-container {
