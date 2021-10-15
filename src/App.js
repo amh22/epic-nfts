@@ -52,17 +52,17 @@ const App = () => {
 
     // Check if the user is on the correct network
 
-    let chainId = await ethereum.request({ method: 'eth_chainId' })
+    // let chainId = await ethereum.request({ method: 'eth_chainId' })
     // console.log('Connected to chain ' + chainId)
 
     // // String, hex code of the chainId of the Rinkebey test network
-    const rinkebyChainId = '0x4'
-    if (chainId !== rinkebyChainId) {
-      // alert("You are not connected to the Rinkeby Test Network!");
-      setCorrectNetwork(false)
-    }
+    // const rinkebyChainId = '0x4'
+    // if (chainId !== rinkebyChainId) {
+    // alert("You are not connected to the Rinkeby Test Network!");
+    //   setCorrectNetwork(false)
+    // }
 
-    setCorrectNetwork(true)
+    // setCorrectNetwork(true)
 
     // Check if we're authorized to access the user's wallet
     const accounts = await ethereum.request({ method: 'eth_accounts' })
@@ -209,7 +209,7 @@ const App = () => {
     // String, hex code of the chainId of the Rinkebey test network
     const rinkebyChainId = '0x4'
     if (chainId !== rinkebyChainId) {
-      alert('You are not connected to the Rinkeby Test Network!')
+      // alert('You are not connected to the Rinkeby Test Network!')
       setCorrectNetwork(false)
     } else setCorrectNetwork(true)
   }
@@ -251,7 +251,7 @@ const App = () => {
   useEffect(() => {
     checkIfWalletIsConnected()
     checkCorrectNetwork()
-    // getNumberMintedVsSupply();
+    // getNumberMintedVsSupply()
   })
 
   const renderNotConnectedContainer = () => (
@@ -357,22 +357,33 @@ const App = () => {
         <div className='' style={{ margin: '40px auto', display: 'flex', justifyContent: 'center' }}>
           {correctNetwork && (
             <div style={{ display: 'flex' }}>
-              <p style={{ color: 'white', letterSpacing: '0.03em' }}>
-                {`MINfTYs minted: ${currentTotalMinted} of ${currentTotalSupply}`}
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', padding: '0px 0px 0px 8px' }}>
-                <FontAwesomeIcon
-                  icon={faSyncAlt}
-                  style={iconStyles}
-                  onMouseEnter={() => {
-                    setActive({ hovered: true, duration: 500 })
-                  }}
-                  onMouseLeave={() => {
-                    setActive({ hovered: false, duration: 500 })
-                  }}
-                  onMouseDown={() => getNumberMintedVsSupply()}
-                />
-              </div>
+              {currentAccount ? (
+                <p style={{ color: 'white', letterSpacing: '0.03em' }}>
+                  {`MINfTYs minted: ${currentTotalMinted} of ${currentTotalSupply}`}
+                </p>
+              ) : (
+                <div style={{ display: 'flex' }}>
+                  <p style={{ color: 'white', letterSpacing: '0.03em' }}>MINfTYs minted:</p>
+                  <p style={{ color: '#35aee2', letterSpacing: '0.03em', paddingLeft: '8px' }}>
+                    please connect your wallet
+                  </p>
+                </div>
+              )}
+              {currentAccount && (
+                <div style={{ display: 'flex', alignItems: 'center', padding: '0px 0px 0px 8px' }}>
+                  <FontAwesomeIcon
+                    icon={faSyncAlt}
+                    style={iconStyles}
+                    onMouseEnter={() => {
+                      setActive({ hovered: true, duration: 500 })
+                    }}
+                    onMouseLeave={() => {
+                      setActive({ hovered: false, duration: 500 })
+                    }}
+                    onMouseDown={() => getNumberMintedVsSupply()}
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>
