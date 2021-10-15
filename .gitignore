@@ -1,0 +1,34 @@
+#Hardhat files
+cache
+artifacts
+
+# production
+/build
+
+# testing
+/coverage
+coverage
+coverage.json
+typechain
+
+# contracts
+cache
+artifacts
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+
+# misc
+.DS_Store
+.env
+.env.development
+.env.production
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+node_modules
