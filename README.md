@@ -1,15 +1,9 @@
-# Basic Sample Hardhat Project
+# Full-stack Ethereum App for an NFT Collection (Rinkeby testnet)
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+The app allows users to mint 1 of 50 available NFTs. The MetaMask browser extension is used for connecting a user's wallet and signing the transaction. On mint, the contract dynamically creates and stores base64 encoded SVGs permanently on-chain. 
 
-Try running some of the following tasks:
+View the collection on OpenSea: https://testnets.opensea.io/collection/minftys
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+The contract: https://rinkeby.etherscan.io/address/0x2cd192f3620b278f767b6f17bb8c48558a2126e3
+
+This is based of a [buildspace tutorial.](https://buildspace.so/projects)
